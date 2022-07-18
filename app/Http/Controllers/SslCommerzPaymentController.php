@@ -8,6 +8,9 @@ use App\Library\SslCommerz\SslCommerzNotification;
 use App\Models\Product;
 use App\Models\Addtocart;
 use App\Models\Order;
+use App\Models\Order_details;
+use App\Models\Cartorder;
+use Carbon\Carbon;
 
 class SslCommerzPaymentController extends Controller
 {
@@ -166,6 +169,19 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
+
+      $addtocarts = Addtocart::where('user_ip' , request()->ip())->select('id','product_id','quantity')->get();
+      foreach ($addtocarts as $cart) {
+        Order_details::insert([
+          'order_id' => Order::where('transaction_id',$request->tran_id)->firstorFail()->id,
+          'product_id' => $cart->product_id,
+          'quantity' => $cart->quantity,
+          'created_at' => Carbon::now()
+        ]);
+        Product::find( $cart->product_id)->decrement('product_quantity',$cart->quantity);
+        Addtocart::find($cart->id)->delete();
+      }
+
 
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');

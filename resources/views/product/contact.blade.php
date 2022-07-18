@@ -1,4 +1,7 @@
 @extends('main')
+@section('contuct')
+active
+@endsection
 @section('body')
 <div class="breadcumb-area bg-img-4 ptb-100">
     <div class="container">
@@ -65,20 +68,18 @@
                       <ul>
                           <li>
                               <i class="fa fa-home"></i> Address:
-                              <p>1234, Contrary to popular Sed ut perspiciatis unde 1234</p>
-                          </li>
+                              <p>{{App\Models\setting::where('setting_name','setting_address')->first()->setting_value}}</p>
+;                          </li>
                           <li>
                               <i class="fa fa-phone"></i> Email address:
                               <p>
-                                  <span>info@yoursite.com </span>
-                                  <span>info@yoursite.com </span>
+                                  <span>  {{App\Models\setting::where('setting_name','email')->first()->setting_value}}</span>
                               </p>
                           </li>
                           <li>
                               <i class="fa fa-envelope"></i> phone number:
                               <p>
-                                  <span>+0123456789</span>
-                                  <span>+1234567890</span>
+                                  <span>{{App\Models\setting::where('setting_name','phone')->first()->setting_value}}</span>
                               </p>
                           </li>
                       </ul>

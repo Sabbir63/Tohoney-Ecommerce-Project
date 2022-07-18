@@ -1,5 +1,7 @@
 @extends('main')
-
+@section('shop')
+active
+@endsection
 @section('body')
 <!-- .breadcumb-area start -->
  <div class="breadcumb-area bg-img-4 ptb-100">

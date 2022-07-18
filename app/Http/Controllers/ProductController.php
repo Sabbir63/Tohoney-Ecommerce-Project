@@ -16,10 +16,10 @@ use Image;
 use Auth;
 
 class ProductController extends Controller{
-  public function __construct(){
-      $this->middleware('auth');
-      $this->middleware('checkrole');
-  }
+  // public function __construct(){
+  //     $this->middleware('auth');
+  //     $this->middleware('checkrole');
+  // }
   // Product INDEX METHOD
   function index(){
     $product = Product::All();

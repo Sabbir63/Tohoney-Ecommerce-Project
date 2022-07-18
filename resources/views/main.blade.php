@@ -119,9 +119,9 @@
                     <div class="col-lg-7 d-none d-lg-block">
                         <nav class="mainmenu">
                             <ul class="d-flex">
-                                <li class="active"><a href="{{route('To_Honey')}}">Home</a></li>
-                                <li><a href="{{route('about')}}">About</a></li>
-                                <li>
+                                <li class="@yield('home')"><a href="{{route('To_Honey')}}">Home</a></li>
+                                <li class="@yield('about')"><a href="{{route('about')}}">About</a></li>
+                                <li class="@yield('shop')">
                                     <a href="{{route('Product_shop')}}">Shop</a>
                                 </li>
                                 <li>
@@ -142,7 +142,7 @@
                                         <li><a href="blog-details.html">blog Details</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{{route('product_contact')}}">Contact</a></li>
+                                <li class="@yield('contuct')"><a href="{{route('product_contact')}}">Contact</a></li>
                             </ul>
                         </nav>
                     </div>

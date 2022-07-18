@@ -23,12 +23,13 @@ use Hash;
 class FrontendCpntroller extends Controller{
 
   function home (){
+    $best_sells = order_details::all();
     $clients = Client::all();
     $countdown = Countdown::all();
     $banners = Baner::all();
     $categories = Category::all();
     $products = Product::latest()->limit(10)->get();
-    return view('welcome',compact('products','categories','banners','countdown','clients'));
+    return view('welcome',compact('products','categories','banners','countdown','clients','best_sells'));
   }
 
   function product_details ($product_id){
@@ -162,7 +163,8 @@ function place_order (Request $request){
 
 
 function about_frontend (){
-  return view('about');
+    $best_sells = order_details::all();
+    return view('about',compact('best_sells'));
 }
 // ========================
 // function exampleEasyCheckout(){
