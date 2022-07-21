@@ -6,8 +6,11 @@
             <div class="product-icon flex-style">
                 <ul>
                     <li><a  href="{{url('product/details')}}/{{$product->id}}"><i class="fa fa-eye"></i></a></li>
-                    <li><a href="{{url('product/wish_list')}}/{{$product->id}}"><i class="fa fa-heart"></i></a></li>
-                    <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
+                    <li>
+                      <a href="{{route('wishlist',$product->id)}}"><i class="fa fa-heart"></i></a>
+                    </li>
+                    <!-- <li id="wish"><a href="#"><i class="fa fa-heart"></i></a></li> -->
+                    <!-- <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li> -->
                 </ul>
             </div>
         </div>
@@ -24,3 +27,17 @@
         </div>
     </div>
 </li>
+
+@section('footer_scripts')
+<script>
+// $(document).ready(function () {
+//   $('#wish').click(function(){
+//     var product_id = $(this).val();
+//
+//     alert(product_id);
+//
+//   })
+// })
+</script>
+
+@endsection

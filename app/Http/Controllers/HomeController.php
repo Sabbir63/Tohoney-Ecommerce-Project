@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Order_details;
+
 class HomeController extends Controller
 {
     /**
@@ -23,6 +25,7 @@ class HomeController extends Controller
      */
     public function index(){
         $user = User::latest()->paginate(3);
-        return view('home',compact('user'));
+        $order_details = Order_details::latest()->get();
+        return view('home',compact('user','order_details'));
     }
 }

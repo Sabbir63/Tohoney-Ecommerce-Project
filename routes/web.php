@@ -98,6 +98,9 @@ Route::get('subcategories/delete/{ssubcategory_id}', [App\Http\Controllers\Subca
 // CouponController
 Route::resource('coupon', App\Http\Controllers\CouponController::class);
 
+// WishlistController
+Route::get('add/wishlist/{product_id}', [App\Http\Controllers\WishlistController::class, 'wishlist'])->name('wishlist');
+Route::get('wishlist/delete/{wishlist_id}', [App\Http\Controllers\WishlistController::class, 'wishlist_delete'])->name('wishlist_delete');
 
 
 

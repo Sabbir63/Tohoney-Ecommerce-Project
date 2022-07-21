@@ -13,6 +13,7 @@ use App\Models\Addtocart;
 use App\Models\Countdown;
 use App\Models\Order;
 use App\Models\Client;
+use App\Models\Wishlist;
 use App\Models\Baner;
 use App\Models\Order_details;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -29,7 +30,8 @@ class FrontendCpntroller extends Controller{
     $banners = Baner::all();
     $categories = Category::all();
     $products = Product::latest()->limit(10)->get();
-    return view('welcome',compact('products','categories','banners','countdown','clients','best_sells'));
+    $wishlists = Wishlist::all();
+    return view('welcome',compact('products','categories','banners','countdown','clients','best_sells','wishlists'));
   }
 
   function product_details ($product_id){

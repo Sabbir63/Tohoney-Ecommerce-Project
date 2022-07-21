@@ -150,35 +150,37 @@
                         <ul class="search-cart-wrapper d-flex">
                             <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
                             <li>
-                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
+                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>{{App\Models\Wishlist::count()}}</span></a>
                                 <ul class="cart-wrap dropdown_style">
+                                  @php
+                                    $subtotal = 0;
+                                  @endphp
+                                  @forelse($wishlists as $wishlist)
                                     <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="assets/images/cart/1.jpg" alt="">
+                                            <img width="100" src="{{asset('uplods/products_image')}}/{{App\Models\Product::find($wishlist->product_id)->product_image}}" alt="">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
+                                            <a href="cart.html">{{App\Models\Product::find($wishlist->product_id)->product_name}}</a>
+                                            <span>QTY : {{$wishlist->quantity}}</span>
+                                            <p>${{number_format($wishlist->quantity*App\Models\Product::find($wishlist->product_id)->product_price,2)}}</p>
+                                            <a href="{{route('wishlist_delete',$wishlist->id)}}">
                                             <i class="fa fa-times"></i>
+                                            </a>
+                                            @php
+                                            $subtotal += App\Models\Product::find($wishlist->product_id)->product_price*$wishlist->quantity;
+                                            @endphp
                                         </div>
                                     </li>
-                                    <li class="cart-items">
-                                        <div class="cart-img">
-                                            <img src="assets/images/cart/3.jpg" alt="">
-                                        </div>
-                                        <div class="cart-content">
-                                            <a href="cart.html">Pure Nature Product</a>
-                                            <span>QTY : 1</span>
-                                            <p>$35.00</p>
-                                            <i class="fa fa-times"></i>
-                                        </div>
-                                    </li>
-                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    @empty
+                                    Your Wishlist Empty!
+                                    @endforelse
+                                    <li>Subtotol: <span class="pull-right">${{number_format($subtotal,2)}}</span></li>
                                     <li>
                                         <button>Check Out</button>
                                     </li>
                                 </ul>
+
                             </li>
                             <li>
                                 <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>{{App\Models\Addtocart::where('user_ip',request()->ip())->get()->count()}}</span></a>
@@ -209,7 +211,6 @@
                                     <li>
                                         <a href="{{url('cart')}}">
                                           <button type="button">Go To Cart</button>
-
                                         </a>
                                     </li>
                                 </ul>
