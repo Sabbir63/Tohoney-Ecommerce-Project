@@ -168,7 +168,7 @@ class ProductController extends Controller{
       'user_msg' => $request->user_msg,
       'created_at' => Carbon::now()
     ]);
-    Mail::to('nahiddx100@gmail.com')->send(new UserMessages($request->user_msg));
+    Mail::to($request->email)->send(new UserMessages($request->user_msg));
     return back()->with('contact_post','Your Message Submited');
   }
 

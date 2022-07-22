@@ -78,9 +78,8 @@ class SslCommerzPaymentController extends Controller
                 'amount' => $post_data['total_amount'],
                 'status' => 'Pending',
                 'address' => $post_data['cus_add1'],
-
-
-
+                'customer_country_id' => $post_data['cus_country'],
+                'customer_city_id'	=> $post_data['cus_city'],
                 'transaction_id' => $post_data['tran_id'],
                 'currency' => $post_data['currency'],
             ]);
@@ -169,7 +168,6 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
-
       $addtocarts = Addtocart::where('user_ip' , request()->ip())->select('id','product_id','quantity')->get();
       foreach ($addtocarts as $cart) {
         Order_details::insert([
@@ -218,13 +216,13 @@ class SslCommerzPaymentController extends Controller
                     ->update(['status' => 'Failed']);
                 echo "validation Fail";
             }
+            return redirect('/')->with('Transaction','Transaction is successfully Completed');
         } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
              */
 
             // echo Product::all();
-             return redirect('/')->with('Transaction','Transaction is successfully Completed');
             // echo "Transaction is successfully bn Completed";
         } else {
             #That means something wrong happened. You can redirect customer to your product page.

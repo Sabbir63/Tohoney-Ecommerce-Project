@@ -71,8 +71,9 @@
                 <tr>
                     <th>SR No</th>
                     <th>Order Id</th>
-                    <th></th>
                     <th>Orderer Name</th>
+                    <th>Country Name</th>
+                    <th>City Name</th>
                     <th>Orderer Address</th>
                     <th>Orderer Phone</th>
                     <th>Order Product name</th>
@@ -90,8 +91,9 @@
 
                 <td>{{$loop->index + 1}}</td>
                 <td>{{$order_detail->order_id}}</td>
-                <td>Khali</td>
                 <td>{{App\Models\Order::find($order_detail->order_id)->name}}</td>
+                <td>{{App\Models\Country::find(App\Models\Order::find($order_detail->order_id)->customer_country_id)->name ?? ""}}</td>
+                <td>{{App\Models\City::find(App\Models\Order::find($order_detail->order_id)->customer_city_id)->name ?? ''}}</td>
                 <td>{{App\Models\Order::find($order_detail->order_id)->address}}</td>
                 <td>{{App\Models\Order::find($order_detail->order_id)->phone}}</td>
                 <td>{{App\Models\Product::find($order_detail->product_id)->product_name}}</td>
@@ -115,7 +117,7 @@
 
             </tbody>
           </table>
-          <button type="submit" class="btn btn-danger">Checked Delete</button>
+          {{$order_details->links()}}
         </div>
     </div>
   </div>

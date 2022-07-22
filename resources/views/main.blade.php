@@ -153,6 +153,7 @@
                                 <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>{{App\Models\Wishlist::count()}}</span></a>
                                 <ul class="cart-wrap dropdown_style">
                                   @php
+                                  $wishlists = App\Models\Wishlist::where('user_ip',request()->ip())->get();
                                     $subtotal = 0;
                                   @endphp
                                   @forelse($wishlists as $wishlist)
@@ -161,7 +162,7 @@
                                             <img width="100" src="{{asset('uplods/products_image')}}/{{App\Models\Product::find($wishlist->product_id)->product_image}}" alt="">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="cart.html">{{App\Models\Product::find($wishlist->product_id)->product_name}}</a>
+                                            <a href="{{route('product_details',App\Models\Product::find($wishlist->product_id)->id)}}">{{App\Models\Product::find($wishlist->product_id)->product_name}}</a>
                                             <span>QTY : {{$wishlist->quantity}}</span>
                                             <p>${{number_format($wishlist->quantity*App\Models\Product::find($wishlist->product_id)->product_price,2)}}</p>
                                             <a href="{{route('wishlist_delete',$wishlist->id)}}">
@@ -176,9 +177,6 @@
                                     Your Wishlist Empty!
                                     @endforelse
                                     <li>Subtotol: <span class="pull-right">${{number_format($subtotal,2)}}</span></li>
-                                    <li>
-                                        <button>Check Out</button>
-                                    </li>
                                 </ul>
 
                             </li>

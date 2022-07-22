@@ -14,6 +14,7 @@ use App\Models\Countdown;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\Wishlist;
+use App\Models\Cashondelevery;
 use App\Models\Baner;
 use App\Models\Order_details;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -30,8 +31,7 @@ class FrontendCpntroller extends Controller{
     $banners = Baner::all();
     $categories = Category::all();
     $products = Product::latest()->limit(10)->get();
-    $wishlists = Wishlist::all();
-    return view('welcome',compact('products','categories','banners','countdown','clients','best_sells','wishlists'));
+    return view('welcome',compact('products','categories','banners','countdown','clients','best_sells'));
   }
 
   function product_details ($product_id){
@@ -139,7 +139,7 @@ function place_order (Request $request){
     ]);
     $addtocart = Addtocart::where('user_ip' , request()->ip())->select('id','product_id','quantity')->get();
   foreach ($addtocart as $cart) {
-    Order_details::insert([
+    Cashondelevery::insert([
       'order_id' => $oreder_id,
       'product_id' => $cart->product_id,
       'quantity' => $cart->quantity,

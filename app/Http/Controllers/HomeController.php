@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Cashondelevery;
 use App\Models\Order_details;
 
 class HomeController extends Controller
@@ -25,7 +26,12 @@ class HomeController extends Controller
      */
     public function index(){
         $user = User::latest()->paginate(3);
-        $order_details = Order_details::latest()->get();
+        $order_details = Order_details::latest()->paginate(5);
         return view('home',compact('user','order_details'));
+    }
+
+    public function cash_on_delevery(){
+      $cash_on_deleverys = Cashondelevery::latest()->get();
+      return view('cash',compact('cash_on_deleverys'));
     }
 }

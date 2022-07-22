@@ -48,6 +48,7 @@ Route::get('about', [App\Http\Controllers\FrontendCpntroller::class, 'about_fron
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('cash/on/delevery', [App\Http\Controllers\HomeController::class, 'cash_on_delevery'])->name('cash_on_delevery');
 
 // Category Server
 Route::get('Categories', [App\Http\Controllers\CategoriesController::class, 'index']);

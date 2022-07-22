@@ -106,6 +106,12 @@
             <span class="menu-item-label">Product</span>
           </div><!-- menu-item -->
         </a><!-- sl-menu-link-->
+        <a href="{{route('cash_on_delevery')}}" class="sl-menu-link @yield('cash_on_delevery')">
+          <div class="sl-menu-item">
+            <i class="menu-item-icon icon fa fa-pencil tx-20"></i>
+            <span class="menu-item-label">Cash On delevery</span>
+          </div><!-- menu-item -->
+        </a><!-- sl-menu-link-->
         <a href="{{url('settings')}}" class="sl-menu-link @yield('setings')">
           <div class="sl-menu-item">
             <i class="menu-item-icon icon fa fa-pencil tx-20"></i>
@@ -281,6 +287,8 @@
     <script src="{{asset('assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- select2 plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     @yield('footer_script')
     <script src="{{asset('assets/js/starlight.js')}}"></script>

@@ -101,7 +101,7 @@ active
                         <div class="product-icon flex-style">
                           <ul>
                     <li><a  href="{{url('product/details')}}/{{App\Models\Product::where('id',$best_sell->product_id)->firstorFail()->id}}"><i class="fa fa-eye"></i></a></li>
-                    <li><a href="{{url('product/wish_list')}}/{{App\Models\Product::where('id',$best_sell->product_id)->firstorFail()->id}}"><i class="fa fa-heart"></i></a></li>
+                    <li><a href="{{route('wishlist',$best_sell->product_id)}}"><i class="fa fa-heart"></i></a></li>
                     <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
                 </ul>
                         </div>
