@@ -23,6 +23,8 @@ Route::resource('banner', App\Http\Controllers\BanerController::class);
 Route::resource('index', App\Http\Controllers\CountdownController::class);
 // ClientFeedbackController
 Route::resource('client', App\Http\Controllers\ClientController::class);
+Route::get('blog', [App\Http\Controllers\ClientController::class, 'blog'])->name('blog');
+Route::post('blog/post', [App\Http\Controllers\ClientController::class, 'blogpost'])->name('blogpost');
 
 
 // Frontend Server
@@ -43,12 +45,12 @@ Route::get('download/pdf/{pdf_id}', [App\Http\Controllers\FrontendCpntroller::cl
 Route::post('get/city/list', [App\Http\Controllers\FrontendCpntroller::class, 'get_city_list']);
 Route::post('place/order', [App\Http\Controllers\FrontendCpntroller::class, 'place_order']);
 Route::get('about', [App\Http\Controllers\FrontendCpntroller::class, 'about_frontend'])->name('about');
-// Route::get('/online/payment', [App\Http\Controllers\FrontendCpntroller::class, 'exampleHostedCheckout']);
 
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('cash/on/delevery', [App\Http\Controllers\HomeController::class, 'cash_on_delevery'])->name('cash_on_delevery');
+
 
 // Category Server
 Route::get('Categories', [App\Http\Controllers\CategoriesController::class, 'index']);

@@ -168,17 +168,6 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
-      $addtocarts = Addtocart::where('user_ip' , request()->ip())->select('id','product_id','quantity')->get();
-      foreach ($addtocarts as $cart) {
-        Order_details::insert([
-          'order_id' => Order::where('transaction_id',$request->tran_id)->firstorFail()->id,
-          'product_id' => $cart->product_id,
-          'quantity' => $cart->quantity,
-          'created_at' => Carbon::now()
-        ]);
-        Product::find( $cart->product_id)->decrement('product_quantity',$cart->quantity);
-        Addtocart::find($cart->id)->delete();
-      }
 
 
         $tran_id = $request->input('tran_id');
@@ -206,6 +195,21 @@ class SslCommerzPaymentController extends Controller
                     ->update(['status' => 'Processing']);
 
 
+                    $addtocarts = Addtocart::where('user_ip' , request()->ip())->select('id','product_id','quantity')->get();
+                    foreach ($addtocarts as $cart) {
+                  $online_order_id = Order_details::insertGetId([
+                        'order_id' => Order::where('transaction_id',$request->tran_id)->firstorFail()->id,
+                        'product_id' => $cart->product_id,
+                        'quantity' => $cart->quantity,
+                        'created_at' => Carbon::now()
+                      ]);
+                      Product::find( $cart->product_id)->decrement('product_quantity',$cart->quantity);
+                      Addtocart::find($cart->id)->delete();
+                    }
+              // dd($online_order_id);
+            // $online_order_id =   Order::where('transaction_id',$request->tran_id)->firstorFail()->id;
+                    return view('client_revew',compact('online_order_id'));
+
             } else {
                 /*
                 That means IPN did not work or IPN URL was not set in your merchant panel and Transation validation failed.
@@ -216,7 +220,7 @@ class SslCommerzPaymentController extends Controller
                     ->update(['status' => 'Failed']);
                 echo "validation Fail";
             }
-            return redirect('/')->with('Transaction','Transaction is successfully Completed');
+            // return redirect('/')->with('Transaction','Transaction is successfully Completed');
         } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
@@ -231,6 +235,7 @@ class SslCommerzPaymentController extends Controller
 
 
     }
+
 
     public function fail(Request $request)
     {

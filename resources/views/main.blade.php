@@ -138,7 +138,7 @@
                                 <li>
                                     <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown_style">
-                                        <li><a href="blog.html">blog Page</a></li>
+                                        <li><a href="{{route('blog')}}">blog Page</a></li>
                                         <li><a href="blog-details.html">blog Details</a></li>
                                     </ul>
                                 </li>

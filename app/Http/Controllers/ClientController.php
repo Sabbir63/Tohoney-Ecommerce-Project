@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Clientreview;
+use Carbon\Carbon;
 use Image;
 
 class ClientController extends Controller
@@ -102,5 +104,17 @@ class ClientController extends Controller
     {
         $client->delete();
         return back();
+    }
+
+    function blog(){
+      return view('client_revew');
+    }
+    function blogpost(Request $request){
+      // return $request;
+      // die();
+      Clientreview::insert($request->except('_token')+ [
+        'created_at' => Carbon::now()
+      ]);
+      return redirect('/')->with('Transaction','Transaction is successfully Completed');
     }
 }

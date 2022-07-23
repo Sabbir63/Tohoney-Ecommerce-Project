@@ -52,11 +52,10 @@
                       <div class="rating-wrap fix">
                           <span class="pull-left">${{$product_info->product_price}}</span>
                           <ul class="rating pull-right">
+                            @foreach(App\Models\Clientreview::all() as $review)
+                              {{$review->cl_id}}
                               <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
-                              <li><i class="fa fa-star"></i></li>
+                              @endforeach
                               <li>(05 Customar Review)</li>
                           </ul>
                       </div>
