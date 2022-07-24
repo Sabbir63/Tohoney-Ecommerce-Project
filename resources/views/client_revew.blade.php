@@ -330,7 +330,10 @@ body {
     <form class="" action="{{route('blogpost')}}" method="post">
       @csrf
     <div class="names">
-      <input type="text" name="cl_id" class="firstname" value="{{$online_order_id}}">
+      @php
+      $product_id =  App\Models\Order_details::where('order_id',$online_order_id)->firstorFail()->product_id
+      @endphp
+      <input type="text" name="cl_id" class="firstname" value="{{$product_id}}">
       <input type="text" name="cl_f_name" class="firstname" placeholder="First name">
       <input type="text" name="cl_l_name" class="lastname" placeholder="Last name">
     </div>

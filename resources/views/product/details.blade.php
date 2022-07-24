@@ -48,16 +48,33 @@
               <div class="col-lg-6">
                   <div class="product-single-content">
                       <h3>{{$product_info->product_name}}</h3>
+                      @if($product_info->product_quantity > 0)
                       <h5 class="badge badge-success">Available Stock : {{$product_info->product_quantity}}</h5>
+                      @else
+                      <h5 class="badge badge-danger">Available Stock : {{$product_info->product_quantity}}</h5>
+                      @endif
                       <div class="rating-wrap fix">
                           <span class="pull-left">${{$product_info->product_price}}</span>
-                          <ul class="rating pull-right">
-                            @foreach(App\Models\Clientreview::all() as $review)
-                              {{$review->cl_id}}
-                              <li><i class="fa fa-star"></i></li>
-                              @endforeach
-                              <li>(05 Customar Review)</li>
+                            @php
+                            $clientReview = App\Models\Clientreview::where('cl_id',$product_info->id)->first();
+                            $data=null;
+                            if(!empty($clientReview))
+                            {
+                              $data = $clientReview->cl_rating;
+                            }
+                            @endphp
+
+                            @if($data)
+                            <ul class="rating pull-right">
+                              @for($i=1; $i<=$data; $i++ )
+                                  <li><i class="fa fa-star"></i></li>
+                              @endfor
+                              <li>(0{{App\Models\Clientreview::where('cl_id',$product_info->id)->firstorfail()->cl_rating}} Customar Review)</li>
+                            @else
+                              <li style="display: flex; color:green; text-align: left; margin-left: 44%;">(Your review count First Customar Review)</li>
+                            @endif
                           </ul>
+
                       </div>
                       <p>{{$product_info->product_short_description}}</p>
                       <form action="{{route('addtocart',$product_info->id)}}" method="post">
