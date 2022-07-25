@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\City;
 use App\Models\Cartorder;
 use App\Models\Addtocart;
+use App\Models\Clientreview;
 use App\Models\Countdown;
 use App\Models\Order;
 use App\Models\Client;
@@ -35,10 +36,17 @@ class FrontendCpntroller extends Controller{
   }
 
   function product_details ($product_id){
+    $clientReview = Clientreview::where('cl_id',$product_id)->first();
+    $data=null;
+    if(!empty($clientReview))
+    {
+      $data = $clientReview->cl_rating;
+    }
+    $clientReviews = Clientreview::all();
     $product_category_id = Product::findOrFail($product_id)->category_id;
     $product_info = Product::findOrFail($product_id);
     $related_product = Product::where('category_id',$product_category_id)->where('id','!=',$product_id)->get();
-    return view('product/details',compact('product_info','related_product'));
+    return view('product/details',compact('product_info','related_product','data','clientReviews'));
   }
   function product_view ($product_id){
     $product_view = Product::findOrFail($product_id);

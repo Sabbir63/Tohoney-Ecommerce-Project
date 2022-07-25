@@ -55,15 +55,6 @@
                       @endif
                       <div class="rating-wrap fix">
                           <span class="pull-left">${{$product_info->product_price}}</span>
-                            @php
-                            $clientReview = App\Models\Clientreview::where('cl_id',$product_info->id)->first();
-                            $data=null;
-                            if(!empty($clientReview))
-                            {
-                              $data = $clientReview->cl_rating;
-                            }
-                            @endphp
-
                             @if($data)
                             <ul class="rating pull-right">
                               @for($i=1; $i<=$data; $i++ )
@@ -182,57 +173,26 @@
                       <div class="tab-pane" id="review">
                           <div class="review-wrap">
                               <ul>
+                                @forelse($clientReviews as $clientReview)
+
                                   <li class="review-items">
-                                      <div class="review-img">
-                                          <img src="{{asset('tohoneyF')}}/assets/images/comment/1.png" alt="">
+                                      <div class="review-img"  style="width:40%">
+                                          <img width="100%" src="{{asset('uplods/products_image')}}/{{App\Models\Product::find($clientReview->cl_id)->product_image}}" alt="">
                                       </div>
                                       <div class="review-content">
-                                          <h3><a href="#">GERALD BARNES</a></h3>
-                                          <span>27 Jun, 2019 at 2:30pm</span>
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
+                                          <h3><a href="#">{{$clientReview->cl_f_name}} {{$clientReview->cl_l_name}} </a></h3>
+                                          <span>{{$clientReview->created_at}} </span>
+                                          <p>{{$clientReview->cl_text}} </p>
                                           <ul class="rating">
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
+                                            @for($i = 1; $i<=$clientReview->cl_rating; $i++)
+                                            <li><i class="fa fa-star"></i></li>
+                                            @endfor
                                           </ul>
                                       </div>
                                   </li>
-                                  <li class="review-items">
-                                      <div class="review-img">
-                                          <img src="{{asset('tohoneyF')}}/assets/images/comment/2.png" alt="">
-                                      </div>
-                                      <div class="review-content">
-                                          <h3><a href="#">Olive Oil</a></h3>
-                                          <span>15 may, 2019 at 2:30pm</span>
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                          <ul class="rating">
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star-half-o"></i></li>
-                                          </ul>
-                                      </div>
-                                  </li>
-                                  <li class="review-items">
-                                      <div class="review-img">
-                                          <img src="{{asset('tohoneyF')}}/assets/images/comment/3.png" alt="">
-                                      </div>
-                                      <div class="review-content">
-                                          <h3><a href="#">Nature Honey</a></h3>
-                                          <span>14 janu, 2019 at 2:30pm</span>
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                          <ul class="rating">
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star"></i></li>
-                                              <li><i class="fa fa-star-o"></i></li>
-                                          </ul>
-                                      </div>
-                                  </li>
+                                  @empty
+                                  Your review count First Customar Review
+                                  @endforelse
                               </ul>
                           </div>
                           <div class="add-review">
